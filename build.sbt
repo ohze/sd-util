@@ -20,8 +20,12 @@ lazy val `sd-util` = project
   .settings(
     libraryDependencies ++= Seq(
       "com.typesafe"  % "config"        % "1.3.0",
-      "org.specs2"    %% "specs2-core"  % "3.8.4" % Test
-    )
+      "commons-codec" % "commons-codec" % "1.10"
+    ).map(_ % Optional),
+
+    libraryDependencies ++= Seq(
+      "org.specs2"    %% "specs2-core"  % "3.8.4"
+    ).map(_ % Test)
   )
 
 lazy val root = project.in(file("."))

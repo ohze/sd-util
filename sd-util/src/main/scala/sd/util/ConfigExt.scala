@@ -4,6 +4,7 @@ import com.typesafe.config.ConfigException.WrongType
 import com.typesafe.config.{Config, ConfigFactory}
 import scala.collection.JavaConverters._
 
+/** dependencies: com.typesafe:config */
 object ConfigExt {
   implicit final class Implicits(val c: Config) extends AnyVal {
     import com.typesafe.config.ConfigValueType._
