@@ -13,5 +13,6 @@ scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
 })
 
 libraryDependencies ++= Seq(
-  "com.typesafe" % "config" % "1.3.0"
+  "com.typesafe"  % "config"        % "1.3.0",
+  "org.specs2"    %% "specs2-core"  % "3.8.4" % Test
 )
