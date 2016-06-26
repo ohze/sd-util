@@ -19,6 +19,7 @@ lazy val `sd-util` = project
   .settings(coreSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
+      "javax.inject"  % "javax.inject"  % "1",
       "com.typesafe"  % "config"        % "1.3.0",
       "commons-codec" % "commons-codec" % "1.10"
     ).map(_ % Optional),
