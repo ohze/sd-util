@@ -30,5 +30,6 @@ lazy val `sd-util` = project
   )
 
 lazy val root = project.in(file("."))
+  .settings(coreSettings: _*)
   .settings(publishArtifact := false)
   .aggregate(`sd-test-util`, `sd-util`)
