@@ -1,4 +1,4 @@
-pomExtra in Global := <url>https://github.com/giabao/sd-util</url>
+pomExtra in Global := <url>https://github.com/ohze/sd-util</url>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -7,8 +7,8 @@ pomExtra in Global := <url>https://github.com/giabao/sd-util</url>
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/giabao/sd-util</url>
-    <connection>scm:git:git@github.com:giabao/sd-util.git</connection>
+    <url>https://github.com/ohze/sd-util</url>
+    <connection>scm:git:git@github.com:ohze/sd-util.git</connection>
   </scm>
   <developers>
     <developer>
