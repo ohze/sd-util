@@ -11,11 +11,11 @@ lazy val coreSettings = Seq(
   })
 )
 
-lazy val `sd-test-util` = project
+lazy val `env-hack` = project
   .settings(coreSettings: _*)
 
 lazy val `sd-util` = project
-  .dependsOn(`sd-test-util` % Test)
+  .dependsOn(`env-hack` % Test)
   .settings(coreSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
@@ -29,7 +29,7 @@ lazy val `sd-util` = project
     ).map(_ % Test)
   )
 
-lazy val root = project.in(file("."))
+lazy val `sd-util-root` = project.in(file("."))
   .settings(coreSettings: _*)
   .settings(publishArtifact := false)
-  .aggregate(`sd-test-util`, `sd-util`)
+  .aggregate(`env-hack`, `sd-util`)
