@@ -3,6 +3,11 @@ sd-util
 [![Build Status](https://travis-ci.org/ohze/sd-util.svg)](https://travis-ci.org/ohze/sd-util)
 
 ## Changelog
+### 1.0.2
++ update scala 2.12.4, 2.11.12
++ update com.typesafe:config 1.3.2, commons-codec 1.11
++ update sbt 1.0.1, sbt-coursier 1.0.0-RC13
+
 ### 1.0.1
 + update scala 2.12.3, 2.11.11
 + update sbt 1.0.1, sbt-sonatype 2.0, sbt-pgp 1.1.0, scalastyle-sbt-plugin 1.0.0

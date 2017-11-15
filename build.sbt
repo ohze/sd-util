@@ -1,8 +1,8 @@
 lazy val coreSettings = Seq(
   organization := "com.sandinh",
-  version := "1.0.1",
-  scalaVersion := "2.12.3",
-  crossScalaVersions := Seq("2.11.11", "2.12.3"),
+  version := "1.0.2",
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.11.12", "2.12.4"),
 
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8"),
   scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
@@ -20,8 +20,8 @@ lazy val `sd-util` = project
   .settings(
     libraryDependencies ++= Seq(
       "javax.inject"  % "javax.inject"  % "1",
-      "com.typesafe"  % "config"        % "1.3.1",
-      "commons-codec" % "commons-codec" % "1.10"
+      "com.typesafe"  % "config"        % "1.3.2",
+      "commons-codec" % "commons-codec" % "1.11"
     ).map(_ % Optional),
 
     libraryDependencies ++= Seq(
