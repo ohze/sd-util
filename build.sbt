@@ -1,6 +1,6 @@
 lazy val coreSettings = Seq(
   organization := "com.sandinh",
-  version := "1.0.3",
+  version := "1.1.0",
   scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.12", "2.12.4"),
 
@@ -22,7 +22,7 @@ lazy val `sd-util` = project
       "javax.inject"  % "javax.inject"  % "1",
       "com.typesafe"  % "config"        % "1.3.2",
       "commons-codec" % "commons-codec" % "1.11"
-    ).map(_ % Optional),
+    ),
 
     libraryDependencies ++= Seq(
       "org.specs2"    %% "specs2-core"  % "3.9.5"
