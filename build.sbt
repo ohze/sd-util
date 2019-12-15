@@ -9,7 +9,7 @@ lazy val coreSettings = Seq(
     case Some((2, 11)) => Seq("-Ybackend:GenBCode", "-target:jvm-1.8")
     case Some((2, 12)) => Seq("-target:jvm-1.8")
     case _ => Nil
-  })
+  }),
 )
 
 lazy val `env-hack` = project
@@ -28,7 +28,17 @@ lazy val `sd-util` = project
 
     libraryDependencies ++= Seq(
       "org.specs2"    %% "specs2-core"  % "4.8.1"
-    ).map(_ % Test)
+    ).map(_ % Test),
+
+    // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
+    // and a `src/main/scala-2.13-` source directory for Scala version older than 2.13
+    unmanagedSourceDirectories in Compile += {
+      val sourceDir = (sourceDirectory in Compile).value
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
+        case _                       => sourceDir / "scala-2.13-"
+      }
+    },
   )
 
 lazy val `sd-util-root` = project.in(file("."))
