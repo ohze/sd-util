@@ -2,8 +2,8 @@ package sd.util
 
 import com.typesafe.config.ConfigException.WrongType
 import com.typesafe.config.{Config, ConfigFactory}
-import scala.collection.JavaConverters._
 import java.util.{List => JList}
+import scala.jdk.CollectionConverters._
 
 /** dependencies: com.typesafe:config */
 object ConfigExt {
