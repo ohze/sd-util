@@ -22,12 +22,12 @@ lazy val `sd-util` = project
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
       "javax.inject"  % "javax.inject"  % "1",
-      "com.typesafe"  % "config"        % "1.3.2",
-      "commons-codec" % "commons-codec" % "1.11"
+      "com.typesafe"  % "config"        % "1.4.0",
+      "commons-codec" % "commons-codec" % "1.13"
     ),
 
     libraryDependencies ++= Seq(
-      "org.specs2"    %% "specs2-core"  % "3.9.5"
+      "org.specs2"    %% "specs2-core"  % "4.8.1"
     ).map(_ % Test)
   )
 
