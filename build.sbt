@@ -1,12 +1,13 @@
 lazy val coreSettings = Seq(
   organization := "com.sandinh",
-  version := "1.1.0",
-  scalaVersion := "2.12.4",
-  crossScalaVersions := Seq("2.11.12", "2.12.4"),
+  version := "1.2.0-SNAPSHOT",
+  scalaVersion := "2.13.1",
+  crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.1"),
 
-  scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8"),
+  scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature"),
   scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
-    case Some((2, 11)) => Seq("-Ybackend:GenBCode")
+    case Some((2, 11)) => Seq("-Ybackend:GenBCode", "-target:jvm-1.8")
+    case Some((2, 12)) => Seq("-target:jvm-1.8")
     case _ => Nil
   })
 )
