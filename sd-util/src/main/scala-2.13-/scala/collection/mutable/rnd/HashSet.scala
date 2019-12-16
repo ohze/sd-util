@@ -2,13 +2,13 @@
   * created: 2013-02-01 20:59
   * Copyright(c) 2011-2012 sandinh.com
   */
-package sd.util
+package scala.collection.mutable.rnd
 
 import scala.collection.mutable
 import scala.util.Random
 
-/** extends HashSet to access field `table` */
-final class RandomIterHashSet[A] extends mutable.HashSet[A] {
+/** Random Iterable HashSet */
+final class HashSet[A] extends mutable.HashSet[A] { // extends HashSet to access field `table`
   import collection.Iterator
   override def iterator: Iterator[A] = new Iterator[A] {
     private val pivot = Random.nextInt(table.length) //table.length is always > 0
