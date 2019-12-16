@@ -29,13 +29,4 @@ final class HashSet[A] extends mutable.HashSet[A] { // extends HashSet to access
         Iterator.empty.next()
       }
   }
-
-  def doSome[U](numUserToDo: Int, f: A => U): Unit = {
-    var n = numUserToDo
-    val i = iterator
-    while (n > 0 && i.hasNext) {
-      n -= 1
-      f(i.next())
-    }
-  }
 }
