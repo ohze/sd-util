@@ -11,7 +11,9 @@
  */
 
 package scala.collection
-package mutable
+package mutable.rnd
+
+import scala.collection.mutable._
 
 import scala.annotation.tailrec
 import scala.collection.Stepper.EfficientSplit
@@ -21,12 +23,12 @@ import scala.collection.generic.DefaultSerializationProxy
   *
   * @see [[http://docs.scala-lang.org/overviews/collections/concrete-mutable-collection-classes.html#hash-tables "Scala's Collection Library overview"]]
   * section on `Hash Tables` for more information.
-  *
   * @define Coll `mutable.HashSet`
   * @define coll mutable hash set
   * @define mayNotTerminateInf
   * @define willNotTerminateInf
   */
+//noinspection ScalaStyle
 final class HashSet[A](initialCapacity: Int, loadFactor: Double)
   extends AbstractSet[A]
     with SetOps[A, HashSet, HashSet[A]]
