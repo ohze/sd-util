@@ -23,11 +23,10 @@ lazy val `sd-util` = project
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
       "javax.inject"  % "javax.inject"  % "1",
       "com.typesafe"  % "config"        % "1.4.0",
-      "commons-codec" % "commons-codec" % "1.13"
-    ),
-
-    libraryDependencies ++= Seq(
-      "org.specs2"    %% "specs2-core"  % "4.8.1"
+      "commons-codec" % "commons-codec" % "1.13",
+    ) ++ Seq(
+      "org.specs2"    %% "specs2-core"  % "4.8.1",
+      "com.github.scopt" %% "scopt" % "4.0.0-RC2",
     ).map(_ % Test),
 
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
@@ -39,6 +38,8 @@ lazy val `sd-util` = project
         case _                       => sourceDir / "scala-2.13-"
       }
     },
+
+    mainClass in (Test, run) := Some("sd.util.DoSomeOpsBench"),
   )
 
 lazy val `sd-util-root` = project.in(file("."))
