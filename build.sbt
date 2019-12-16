@@ -1,6 +1,6 @@
 lazy val coreSettings = Seq(
   organization := "com.sandinh",
-  version := "1.2.0-SNAPSHOT",
+  version := "1.2.0",
   scalaVersion := "2.13.1",
   crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.1"),
 
