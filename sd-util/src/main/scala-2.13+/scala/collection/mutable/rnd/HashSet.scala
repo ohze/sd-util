@@ -18,12 +18,13 @@ import scala.collection.mutable._
 import scala.annotation.tailrec
 import scala.collection.Stepper.EfficientSplit
 import scala.collection.generic.DefaultSerializationProxy
+import scala.util.Random
 
 /** This class implements mutable sets using a hashtable.
   *
   * @see [[http://docs.scala-lang.org/overviews/collections/concrete-mutable-collection-classes.html#hash-tables "Scala's Collection Library overview"]]
   * section on `Hash Tables` for more information.
-  * @define Coll `mutable.HashSet`
+ * @define Coll `mutable.HashSet`
   * @define coll mutable hash set
   * @define mayNotTerminateInf
   * @define willNotTerminateInf
@@ -185,6 +186,7 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
     private[this] var i = 0
     private[this] var node: Node[A] = null
     private[this] val len = table.length
+    private[this] var j = Random.nextInt(len) //len is always > 0
 
     protected[this] def extract(nd: Node[A]): B
 
@@ -192,8 +194,9 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
       if(node ne null) true
       else {
         while(i < len) {
-          val n = table(i)
+          val n = table(j)
           i += 1
+          j += 1; if (j == len) j = 0
           if(n ne null) { node = n; return true }
         }
         false
