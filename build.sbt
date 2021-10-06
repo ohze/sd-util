@@ -46,3 +46,17 @@ lazy val `sd-util-root` = project.in(file("."))
   .settings(coreSettings: _*)
   .settings(publishArtifact := false)
   .aggregate(`env-hack`, `sd-util`)
+
+inThisBuild(
+  Seq(
+    versionScheme := Some("semver-spec"),
+    developers := List(
+      Developer(
+        "thanhbv",
+        "Bui Viet Thanh",
+        "thanhbv@sandinh.net",
+        url("https://sandinh.com")
+      )
+    )
+  )
+)
