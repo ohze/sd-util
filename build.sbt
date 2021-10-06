@@ -1,15 +1,6 @@
 lazy val coreSettings = Seq(
-  organization := "com.sandinh",
-  version := "1.2.0",
-  scalaVersion := "2.13.1",
-  crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.1"),
-
-  scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature"),
-  scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
-    case Some((2, 11)) => Seq("-Ybackend:GenBCode", "-target:jvm-1.8")
-    case Some((2, 12)) => Seq("-target:jvm-1.8")
-    case _ => Nil
-  }),
+  scalaVersion := scala213,
+  crossScalaVersions := Seq(scala211, scala212, scala213),
 )
 
 lazy val `env-hack` = project
@@ -44,7 +35,7 @@ lazy val `sd-util` = project
 
 lazy val `sd-util-root` = project.in(file("."))
   .settings(coreSettings: _*)
-  .settings(publishArtifact := false)
+  .settings(skipPublish)
   .aggregate(`env-hack`, `sd-util`)
 
 inThisBuild(
