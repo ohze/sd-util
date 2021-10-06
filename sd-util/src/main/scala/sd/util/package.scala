@@ -6,7 +6,9 @@ package object util {
 
   implicit class DoSomeOps[A](val it: Iterable[A]) extends AnyVal {
     /** not-so-optimized version of `it.take(count).foreach(f)` but ensure that a new Collection is not built
-     * @deprecated use `.view.take(count).foreach(f)` */
+     * @deprecated use `.iterator.take(count).foreach(f)`
+     * @see [[scala.collection.mutable.rnd.HashSet]]
+     */
     def doSome[U](count: Int, f: A => U): Unit = {
       var n = count
       val i = it.iterator
