@@ -39,7 +39,7 @@ class HashSetSpec extends Specification {
     }
 
     "random iterable" >> {
-      takeSome() must have size(n)
+      takeSome() must haveSize(n)
 
       randomly(takeSome) === true
     }
