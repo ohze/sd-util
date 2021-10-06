@@ -1,6 +1,6 @@
 sd-util
 =======
-[![Build Status](https://travis-ci.org/ohze/sd-util.svg)](https://travis-ci.org/ohze/sd-util)
+[![CI](https://github.com/ohze/sd-util/actions/workflows/sbt-devops.yml/badge.svg)](https://github.com/ohze/sd-util/actions/workflows/sbt-devops.yml)
 
 ## Changelog
 we use [Semantic Versioning](http://semver.org/)
