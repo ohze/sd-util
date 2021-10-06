@@ -1,3 +1,4 @@
+// format: off
 /*
  * Scala (https://www.scala-lang.org)
  *
@@ -29,7 +30,6 @@ import scala.util.Random
   * @define mayNotTerminateInf
   * @define willNotTerminateInf
   */
-//noinspection ScalaStyle
 final class HashSet[A](initialCapacity: Int, loadFactor: Double)
   extends AbstractSet[A]
     with SetOps[A, HashSet, HashSet[A]]
