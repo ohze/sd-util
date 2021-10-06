@@ -1,1 +1,1 @@
-addSbtPlugin("com.sandinh" % "sd-devops-oss" % "5.0.6")
+addSbtPlugin("com.sandinh" % "sd-devops-oss" % "5.0.8")

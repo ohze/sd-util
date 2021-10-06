@@ -1,3 +1,4 @@
+
 lazy val coreSettings = Seq(
   scalaVersion := scala213,
   crossScalaVersions := Seq(scala211, scala212, scala213, scala3),
@@ -28,6 +29,14 @@ lazy val `sd-util` = project
     },
 
     Test / run / mainClass := Some("sd.util.DoSomeOpsBench"),
+    // EnvHack using `setAccessible` to reflect into a private field of System.getenv
+    // which default is deny in java 16+
+    addOpensForTest(
+      List(
+        "java.base/java.lang=ALL-UNNAMED",
+        "java.base/java.util=ALL-UNNAMED",
+      )
+    ),
   )
 
 lazy val `sd-util-root` = project.in(file("."))
