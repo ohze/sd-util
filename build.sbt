@@ -1,4 +1,5 @@
 import com.sandinh.sbtsd.SdPlugin.javaVersion
+import com.typesafe.tools.mima.core.{MissingClassProblem, ProblemFilters}
 
 // same as versionPolicyPreviousVersions key from sbt-version-policy
 val mimaPrevVersions = settingKey[Seq[String]](
@@ -62,6 +63,12 @@ lazy val `sd-util` = project
     },
 
     mimaPrevSettings,
+    mimaBinaryIssueFilters ++= Seq(
+      // We added a deprecated type alias in `package object util`:
+      //  type RandomIterHashSet[A] = scala.collection.mutable.rnd.HashSet[A]
+      // But mima don't understand that
+      ProblemFilters.exclude[MissingClassProblem]("sd.util.RandomIterHashSet"),
+    ),
 
     Test / run / mainClass := Some("sd.util.DoSomeOpsBench"),
     // EnvHack using `setAccessible` to reflect into a private field of System.getenv
