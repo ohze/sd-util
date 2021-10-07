@@ -1,10 +1,31 @@
 
+// same as versionPolicyPreviousVersions key from sbt-version-policy
+val mimaPrevVersions = settingKey[Seq[String]](
+  "Previous versions to check compatibility against."
+)
+val mimaPrevSettings = Seq(
+  mimaPreviousArtifacts := mimaPrevVersions.value.toSet.map { v =>
+    "com.sandinh" %% moduleName.value % v
+  },
+  mimaPrevVersions := (scalaBinaryVersion.value match {
+    case "3" => Nil
+    case "2.13" => Seq("1.2.0")
+    // sd-util 1.0.0 don't release for scala 2.12
+    case "2.12" => Seq("1.0.1", "1.0.2", "1.0.3", "1.1.0", "1.2.0")
+    case _ => Seq("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.1.0", "1.2.0")
+  }),
+)
+
 lazy val coreSettings = Seq(
   scalaVersion := scala213,
   crossScalaVersions := Seq(scala211, scala212, scala213, scala3),
 )
 
-lazy val `env-hack` = project.settings(coreSettings)
+lazy val `env-hack` = project.settings(
+  coreSettings,
+  mimaPrevSettings,
+  mimaPrevVersions -= "1.0.0", // don't have this version
+)
 
 lazy val `sd-util` = project
   .dependsOn(`env-hack` % Test)
@@ -28,6 +49,8 @@ lazy val `sd-util` = project
       }
     },
 
+    mimaPrevSettings,
+
     Test / run / mainClass := Some("sd.util.DoSomeOpsBench"),
     // EnvHack using `setAccessible` to reflect into a private field of System.getenv
     // which default is deny in java 16+
@@ -40,6 +63,7 @@ lazy val `sd-util` = project
   )
 
 lazy val `sd-util-root` = project.in(file("."))
+  .disablePlugins(MimaPlugin)
   .settings(coreSettings, skipPublish)
   .aggregate(`env-hack`, `sd-util`)
 
