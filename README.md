@@ -5,6 +5,9 @@ sd-util
 ## Changelog
 we use [Semantic Versioning](http://semver.org/)
 
+### 1.2.1 (tobe release)
+TODO
+
 ### 1.2.0
 + support scala 2.13
 + update libs:
@@ -21,10 +24,11 @@ we use [Semantic Versioning](http://semver.org/)
 + a benchmark for `.doSome(count, f)` vs `.take(count).foreach(f)` vs `.view.take(count).foreach(f)`
 
 ### 1.1.0
-TODO
++ revert changes in v1.0.3: Remove sd.util.HmacSHA1
++ Exactly === v1.0.2
 
 ### 1.0.3
-TODO
++ Add sd.util.HmacSHA1
 
 ### 1.0.2
 + update scala 2.12.4, 2.11.12

@@ -1,3 +1,4 @@
+import com.sandinh.sbtsd.SdPlugin.javaVersion
 
 // same as versionPolicyPreviousVersions key from sbt-version-policy
 val mimaPrevVersions = settingKey[Seq[String]](
@@ -48,7 +49,7 @@ lazy val `sd-util` = project
       "com.typesafe"  % "config"        % configV.value,
       "commons-codec" % "commons-codec" % commonsCodecV.value,
       "com.github.scopt" %% "scopt" % "4.0.1" % Test,
-    ) ++ specs2("-core").value,
+    ) ++ specs2("-core", "-scalacheck").value,
 
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
     // and a `src/main/scala-2.13-` source directory for Scala version older than 2.13
@@ -71,6 +72,12 @@ lazy val `sd-util` = project
         "java.base/java.util=ALL-UNNAMED",
       )
     ),
+    // HmacSHA1 introduced in v1.0.3 by vinhbt can't be normally compiled in java > 8
+    // We re-impl and test that the old and new ones have same behaviour
+    Test / unmanagedSourceDirectories ++= {
+      if (javaVersion > 8) Nil
+      else Seq(sourceDirectory.value / "test/java-8")
+    },
   )
 
 lazy val `sd-util-root` = project.in(file("."))
