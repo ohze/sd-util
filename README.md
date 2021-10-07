@@ -6,7 +6,17 @@ sd-util
 we use [Semantic Versioning](http://semver.org/)
 
 ### 1.2.1 (tobe release)
-TODO
++ Update sbt and use [sbt-devops](/ohze/sbt-devops) for CI
++ Update latest scala patch version (such as `2.12.10 -> 2.12.15`)
++ Add scala3 support
++ Update `scala-collection-compat:2.5.0`
++ Change `com.typesafe:config` & `commons-codec` version:
+  - `config:1.3.4 & commons-codec:1.10` for scala 2.11 & 2.12 => compatible with v1.0.x
+  - `config:1.4.1 & commons-codec:1.15` for scala 2.13 & 3 => compatible with v1.1.x
++ Add a new implementation of `sd.util.HmacSHA1`
++ Cherry-pick an improvement for rnd.HashSet from scala's repo
++ Backward compatible with all versions from `1.0.0` to `1.2.0` except the things mentioned above.
+  - Ensure by [mima](https://github.com/lightbend/mima)
 
 ### 1.2.0
 + support scala 2.13
@@ -19,7 +29,7 @@ TODO
 + mv `rnd.HashSet.doSome` to a deprecated extension method for Iterable.
     Note:
     - break compatibility! now you need `import sd.util.DoSomeOps` before use `aHashSet.doSome[U](count: Int, f: A => U)`
-    - note `doSome` is now deprecated. Pls use `.view.take(count).foreach(f)`
+    - note `doSome` is now deprecated. Pls use `.iterator.take(count).foreach(f)`
 + add test specs for `rnd.HashSet`
 + a benchmark for `.doSome(count, f)` vs `.take(count).foreach(f)` vs `.view.take(count).foreach(f)`
 
@@ -41,6 +51,9 @@ TODO
 + use sbt-coursier 1.0.0-RC11
 + move source code to github.com/ohze/sd-util
 + update typesafe config 1.3.1
+
+# 1.0.0
++ Initial release
 
 ## Licence
 This software is licensed under the Apache 2 license:
