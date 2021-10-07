@@ -16,6 +16,17 @@ val mimaPrevSettings = Seq(
   }),
 )
 
+val commonsCodecV = scalaBinaryVersion {
+  // to keep compat with sd-util 1.0.0
+  case "2.11" | "2.12" => "1.10"
+  case _ => "1.15"
+}
+val configV = scalaBinaryVersion {
+  // to keep compat with sd-util 1.0.0
+  case "2.11" | "2.12" => "1.3.4"
+  case _ => "1.4.1"
+}
+
 lazy val coreSettings = Seq(
   scalaVersion := scala213,
   crossScalaVersions := Seq(scala211, scala212, scala213, scala3),
@@ -34,8 +45,8 @@ lazy val `sd-util` = project
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0",
       "javax.inject"  % "javax.inject"  % "1",
-      "com.typesafe"  % "config"        % "1.4.0",
-      "commons-codec" % "commons-codec" % "1.13",
+      "com.typesafe"  % "config"        % configV.value,
+      "commons-codec" % "commons-codec" % commonsCodecV.value,
       "com.github.scopt" %% "scopt" % "4.0.1" % Test,
     ) ++ specs2("-core").value,
 
