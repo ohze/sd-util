@@ -1,5 +1,9 @@
 import com.sandinh.sbtsd.SdPlugin.javaVersion
-import com.typesafe.tools.mima.core.{MissingClassProblem, ProblemFilters}
+import com.typesafe.tools.mima.core.{
+  DirectMissingMethodProblem,
+  MissingClassProblem,
+  ProblemFilters
+}
 
 // same as versionPolicyPreviousVersions key from sbt-version-policy
 val mimaPrevVersions = settingKey[Seq[String]](
@@ -68,6 +72,10 @@ lazy val `sd-util` = project
       //  type RandomIterHashSet[A] = scala.collection.mutable.rnd.HashSet[A]
       // But mima don't understand that
       ProblemFilters.exclude[MissingClassProblem]("sd.util.RandomIterHashSet"),
+      // cause by: scalafix LeakingImplicitClassVal
+      // underlying val in `implicit class .. extends AnyVal` should be private
+      ProblemFilters
+        .exclude[DirectMissingMethodProblem]("sd.util.package#DoSomeOps.it"),
     ),
 
     Test / run / mainClass := Some("sd.util.DoSomeOpsBench"),
