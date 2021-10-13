@@ -18,7 +18,11 @@ object TripleDES {
     cipher
   }
 
-  def encrypt(key: String, data: String): String = encodeBase64String(getCipher(key, ENCRYPT_MODE).doFinal(data.getBytes))
+  def encrypt(key: String, data: String): String = encodeBase64String(
+    getCipher(key, ENCRYPT_MODE).doFinal(data.getBytes)
+  )
 
-  def decrypt(key: String, data: String): String = new String(getCipher(key, DECRYPT_MODE).doFinal(decodeBase64(data)))
+  def decrypt(key: String, data: String): String = new String(
+    getCipher(key, DECRYPT_MODE).doFinal(decodeBase64(data))
+  )
 }

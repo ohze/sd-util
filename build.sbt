@@ -14,23 +14,23 @@ val mimaPrevSettings = Seq(
     "com.sandinh" %% moduleName.value % v
   },
   mimaPrevVersions := (scalaBinaryVersion.value match {
-    case "3" => Nil
+    case "3"    => Nil
     case "2.13" => Seq("1.2.0")
     // sd-util 1.0.0 don't release for scala 2.12
     case "2.12" => Seq("1.0.1", "1.0.2", "1.0.3", "1.1.0", "1.2.0")
-    case _ => Seq("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.1.0", "1.2.0")
+    case _      => Seq("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.1.0", "1.2.0")
   }),
 )
 
 val commonsCodecV = scalaBinaryVersion {
   // to keep compat with sd-util 1.0.0
   case "2.11" | "2.12" => "1.10"
-  case _ => "1.15"
+  case _               => "1.15"
 }
 val configV = scalaBinaryVersion {
   // to keep compat with sd-util 1.0.0
   case "2.11" | "2.12" => "1.3.4"
-  case _ => "1.4.1"
+  case _               => "1.4.1"
 }
 
 lazy val coreSettings = Seq(
@@ -50,8 +50,8 @@ lazy val `sd-util` = project
     coreSettings,
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0",
-      "javax.inject"  % "javax.inject"  % "1",
-      "com.typesafe"  % "config"        % configV.value,
+      "javax.inject" % "javax.inject" % "1",
+      "com.typesafe" % "config" % configV.value,
       "commons-codec" % "commons-codec" % commonsCodecV.value,
       "com.github.scopt" %% "scopt" % "4.0.1" % Test,
     ) ++ specs2("-core", "-scalacheck").value,
@@ -65,7 +65,6 @@ lazy val `sd-util` = project
         case _               => sourceDir / "scala-2.13+"
       }
     },
-
     mimaPrevSettings,
     mimaBinaryIssueFilters ++= Seq(
       // We added a deprecated type alias in `package object util`:
@@ -77,7 +76,6 @@ lazy val `sd-util` = project
       ProblemFilters
         .exclude[DirectMissingMethodProblem]("sd.util.package#DoSomeOps.it"),
     ),
-
     Test / run / mainClass := Some("sd.util.DoSomeOpsBench"),
     // EnvHack using `setAccessible` to reflect into a private field of System.getenv
     // which default is deny in java 16+
@@ -95,7 +93,8 @@ lazy val `sd-util` = project
     },
   )
 
-lazy val `sd-util-root` = project.in(file("."))
+lazy val `sd-util-root` = project
+  .in(file("."))
   .disablePlugins(MimaPlugin)
   .settings(coreSettings, skipPublish)
   .aggregate(`env-hack`, `sd-util`)

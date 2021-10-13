@@ -9,7 +9,11 @@ object Algs extends Enumeration {
 }
 
 import Algs._
-private case class Config(num: Int = 10000, rTake: Double = .9, alg: Algs = DoSome) {
+private case class Config(
+    num: Int = 10000,
+    rTake: Double = .9,
+    alg: Algs = DoSome
+) {
   def take = (num * rTake).toInt
 }
 object DoSomeOpsBench {
@@ -30,8 +34,8 @@ object DoSomeOpsBench {
           .text("ratio of number of processing item / `num`. In [0, 1]")
           .validate {
             case f if f <= 0 => Left("must >0")
-            case f if f > 1 => Left("must <= 1")
-            case _ => Right(())
+            case f if f > 1  => Left("must <= 1")
+            case _           => Right(())
           },
         opt[Algs]('a', "alg")
           .action((x, c) => c.copy(alg = x))
@@ -57,8 +61,8 @@ object DoSomeOpsBench {
     def bench(alg: Algs): Long = {
       val t1 = System.nanoTime()
       alg match {
-        case DoSome => h.doSome(c.take, foo)
-        case Take => h.take(c.take).foreach(foo)
+        case DoSome   => h.doSome(c.take, foo)
+        case Take     => h.take(c.take).foreach(foo)
         case ViewTake => h.view.take(c.take).foreach(foo)
       }
       val t2 = System.nanoTime()
@@ -68,15 +72,16 @@ object DoSomeOpsBench {
     val TTake = bench(Take)
     val TViewTake = bench(ViewTake)
     val best = TDoSome min TTake min TViewTake match {
-      case TDoSome => DoSome
-      case TTake => Take
+      case TDoSome   => DoSome
+      case TTake     => Take
       case TViewTake => ViewTake
-      case _ => ???
+      case _         => ???
     }
 
     println(
       s"Bench:\nDoSome\t\t\tTake\t\t\tViewTake\n" +
-      s"${TDoSome.fmt}\t\t${TTake.fmt}\t\t${TViewTake.fmt}\n" +
-      s"Best: $best")
+        s"${TDoSome.fmt}\t\t${TTake.fmt}\t\t${TViewTake.fmt}\n" +
+        s"Best: $best"
+    )
   }
 }
