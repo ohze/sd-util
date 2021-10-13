@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 
 class HashSetSpec extends Specification {
   "(RandomIter)HashSet" >> {
-    val seq = Seq(3, 3, 0, 2, 4, -3, 1 -3, 0, 9, -1)
+    val seq = Seq(3, 3, 0, 2, 4, -3, 1 - 3, 0, 9, -1)
     val h = new HashSet[Int] ++= seq
     val n = 5 //number of elems to takeSome
     def takeSome(): Seq[Int] = {
@@ -25,7 +25,9 @@ class HashSetSpec extends Specification {
         if (l1.size != l2.size || l1.size != n)
           return false
         if ((l1 zip l2).exists(z => z._1 != z._2)) {
-          println(s"random at round $i. First elems are ${l1.head} != ${l2.head}")
+          println(
+            s"random at round $i. First elems are ${l1.head} != ${l2.head}"
+          )
           return true
         }
       }

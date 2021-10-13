@@ -14,20 +14,27 @@ object ConfigExt {
       v.valueType() match {
         case LIST => v.unwrapped.asInstanceOf[JList[String]].asScala.toSeq
         case STRING =>
-          val tmpCfg = ConfigFactory.parseString("root:" + v.unwrapped.asInstanceOf[String])
+          val tmpCfg = ConfigFactory.parseString(
+            "root:" + v.unwrapped.asInstanceOf[String]
+          )
           tmpCfg.resolve().getStringList("root").asScala.toSeq
-        case x => throw new WrongType(v.origin(), path, "String_LIST | STRING", x.name)
+        case x =>
+          throw new WrongType(v.origin(), path, "String_LIST | STRING", x.name)
       }
     }
 
     def getIntListEx(path: String): Seq[Int] = {
       val v = c.getValue(path)
       v.valueType() match {
-        case LIST => v.unwrapped.asInstanceOf[JList[Integer]].asScala.map(_.intValue).toSeq
+        case LIST =>
+          v.unwrapped.asInstanceOf[JList[Integer]].asScala.map(_.intValue).toSeq
         case STRING =>
-          val tmpCfg = ConfigFactory.parseString("root:" + v.unwrapped.asInstanceOf[String])
+          val tmpCfg = ConfigFactory.parseString(
+            "root:" + v.unwrapped.asInstanceOf[String]
+          )
           tmpCfg.resolve().getIntList("root").asScala.map(_.intValue).toSeq
-        case x => throw new WrongType(v.origin(), path, "Int_LIST | STRING", x.name)
+        case x =>
+          throw new WrongType(v.origin(), path, "Int_LIST | STRING", x.name)
       }
     }
   }

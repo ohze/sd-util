@@ -6,7 +6,9 @@ import org.specs2.matcher.Matchers
 import org.specs2.mutable.Specification
 import sd.util.ConfigExt.Implicits
 
-class ConfigExtSpec(implicit ee: ExecutionEnv) extends Specification with Matchers {
+class ConfigExtSpec(implicit ee: ExecutionEnv)
+    extends Specification
+    with Matchers {
   "ConfigExt normal case" >> {
     val c = ConfigFactory.parseString(
       """
@@ -21,7 +23,7 @@ class ConfigExtSpec(implicit ee: ExecutionEnv) extends Specification with Matche
     )
     c.getStringListEx("foo.baz") === Seq("a", "b", "cd")
     c.getIntListEx("foo.cards.vms") === Seq.empty[Int]
-    c.getIntListEx("foo.cards.vina") === Seq(0,0,100)
+    c.getIntListEx("foo.cards.vina") === Seq(0, 0, 100)
   }
 
   "ConfigExt can use Env Variables (string)" >> {
