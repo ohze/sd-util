@@ -119,6 +119,7 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
     addElem(elem, computeHash(elem))
   }
 
+  @scala.annotation.nowarn("msg=the type test for .+HashSet\\[A\\] cannot be checked at runtime")
   override def addAll(xs: IterableOnce[A]): this.type = {
     sizeHint(xs.knownSize)
     xs match {
@@ -136,6 +137,7 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
     }
   }
 
+  @scala.annotation.nowarn("msg=the type test for .+HashSet\\[A\\] cannot be checked at runtime")
   override def subtractAll(xs: IterableOnce[A]): this.type = {
     if (size == 0) {
       return this
