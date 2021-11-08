@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         java: [ '8', '11', '17' ]
-        scala: [ '2.11.12', '2.12.15', '2.13.6', '3.0.2' ]
+        scala: [ '2.11.12', '2.12.15', '2.13.7', '3.1.0' ]
     steps:
       - uses: actions/checkout@v2
       - id: commitMsg
@@ -19,7 +19,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
       - uses: coursier/cache-action@v6
-      - run: sbt ++${{ matrix.scala }} devopsQA test mimaReportBinaryIssues
+      - run: sbt devopsQA ++${{ matrix.scala }} test
       # https://www.scala-sbt.org/1.x/docs/GitHub-Actions-with-sbt.html#Caching
       - run: |
           rm -rf "$HOME/.ivy2/local" || true
