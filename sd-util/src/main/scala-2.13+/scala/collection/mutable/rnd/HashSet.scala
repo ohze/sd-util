@@ -1,3 +1,6 @@
+// format: off
+// This code is copied from scala and add a minor change to make this be a Random Iterable HashSet
+// see: https://github.com/scala/scala/blob/v2.13.6/src/library/scala/collection/mutable/HashSet.scala
 /*
  * Scala (https://www.scala-lang.org)
  *
@@ -11,25 +14,49 @@
  */
 
 package scala.collection
-package mutable.rnd
-
-import scala.collection.mutable._
+package mutable
+package rnd
 
 import scala.annotation.tailrec
 import scala.collection.Stepper.EfficientSplit
 import scala.collection.generic.DefaultSerializationProxy
+import scala.util.hashing.MurmurHash3
 import scala.util.Random
 
 /** This class implements mutable sets using a hashtable.
+  * Different from scala.collection.mutable.HashSet, this is a RandomIterableHashSet
+  * {{{
+  *   import scala.collection.mutable.rnd
+  *   val waitingUsers: rnd.HashSet[User] = ???
+  *   val numUserToDo: Int = ???
+  *   waitingUsers
+  *     .iterator // must use `iterator` for random feature
+  *     .take(numUserToDo) // may return less than numUserToDo if waitingUsers.length < numUserToDo
+  *     .foreach { user => /* do whatever with this user */ }
+  * }}}
+  * Notes:
+  * + rnd.HashSet is exactly == collection.mutable.HashSet except that it randomly iterating
+  * + If you iterate directly, ex `aHashSet.foreach` then the iterating order will not random
+  *   (must use `aHashSet.iterator.blabla`)
+  * + Each time you call `.iterator` then the `.next()` will be random. But given:
+  *   {{{
+  *     val h = rnd.HashSet(1,2,3,4)
+  *     val i1 = h.iterator
+  *     val i2 = h.iterator
+  *   }}}
+  *   Then:
+  *   - i1.next() can ! i2.next()
+  *   - but if i1.next() `n` times == i2.next() // 2 times mean i1.next().next()
+  *         then i1.next() `n + 1` times will always == i2.next().next()
   *
-  * @see [[http://docs.scala-lang.org/overviews/collections/concrete-mutable-collection-classes.html#hash-tables "Scala's Collection Library overview"]]
+  * @see [[https://docs.scala-lang.org/overviews/collections/concrete-mutable-collection-classes.html#hash-tables "Scala's Collection Library overview"]]
   * section on `Hash Tables` for more information.
- * @define Coll `mutable.HashSet`
+  *
+  * @define Coll `mutable.HashSet`
   * @define coll mutable hash set
   * @define mayNotTerminateInf
   * @define willNotTerminateInf
   */
-//noinspection ScalaStyle
 final class HashSet[A](initialCapacity: Int, loadFactor: Double)
   extends AbstractSet[A]
     with SetOps[A, HashSet, HashSet[A]]
@@ -41,6 +68,11 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
 
   import HashSet.Node
 
+  /* The Hashset class holds the following invariant:
+   * - For each i between  0 and table.length, the bucket at table(i) only contains elements whose hash-index is i.
+   * - Every bucket is sorted in ascendent hash order
+   * - The sum of the lengths of all buckets is equal to contentSize.
+   */
   /** The actual hash table. */
   private[this] var table = new Array[Node[A]](tableSizeFor(initialCapacity))
 
@@ -365,6 +397,21 @@ final class HashSet[A](initialCapacity: Int, loadFactor: Double)
   protected[this] def writeReplace(): AnyRef = new DefaultSerializationProxy(new HashSet.DeserializationFactory[A](table.length, loadFactor), this)
 
   override protected[this] def className = "HashSet"
+
+  override def hashCode: Int = {
+    val setIterator = this.iterator
+    val hashIterator: Iterator[Any] =
+      if (setIterator.isEmpty) setIterator
+      else new HashSetIterator[Any] {
+        var hash: Int = 0
+        override def hashCode: Int = hash
+        override protected[this] def extract(nd: Node[A]): Any = {
+          hash = unimproveHash(nd.hash)
+          this
+        }
+      }
+    MurmurHash3.unorderedHash(hashIterator, MurmurHash3.setSeed)
+  }
 }
 
 /**

@@ -2,3 +2,8 @@
 /*/target/
 /project/project
 /target
+.bloop
+.metals
+.bsp
+.vscode
+metals.sbt

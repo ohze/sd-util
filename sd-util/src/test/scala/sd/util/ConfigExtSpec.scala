@@ -19,9 +19,9 @@ class ConfigExtSpec(implicit ee: ExecutionEnv) extends Specification with Matche
         |}
       """.stripMargin
     )
-    c.getStringListEx("foo.baz") must_=== Seq("a", "b", "cd")
-    c.getIntListEx("foo.cards.vms") must_=== Seq.empty[Int]
-    c.getIntListEx("foo.cards.vina") must_=== Seq(0,0,100)
+    c.getStringListEx("foo.baz") === Seq("a", "b", "cd")
+    c.getIntListEx("foo.cards.vms") === Seq.empty[Int]
+    c.getIntListEx("foo.cards.vina") === Seq(0,0,100)
   }
 
   "ConfigExt can use Env Variables (string)" >> {
@@ -39,7 +39,7 @@ class ConfigExtSpec(implicit ee: ExecutionEnv) extends Specification with Matche
     )
     EnvHack.setEnv(Map("CARDS_VINA" -> "[1, 4,3]"))
     val c = c0.resolve()
-    c.getStringListEx("foo.baz") must_=== Seq("a", "b", "cd")
-    c.getIntListEx("foo.cards.vina") must_=== Seq(1, 4, 3)
+    c.getStringListEx("foo.baz") === Seq("a", "b", "cd")
+    c.getIntListEx("foo.cards.vina") === Seq(1, 4, 3)
   }
 }
