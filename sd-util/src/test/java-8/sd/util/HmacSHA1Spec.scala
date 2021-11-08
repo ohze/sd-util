@@ -4,7 +4,8 @@ import org.specs2._
 import scala.util.{Failure, Success, Try}
 
 class HmacSHA1Spec extends Specification with ScalaCheck {
-  def is = s2"sd.util.HmacSHA1 in `sd-util:1.0.3` is same as in our new version ${prop(check)}"
+  def is =
+    s2"sd.util.HmacSHA1 in `sd-util:1.0.3` is same as in our new version ${prop(check)}"
 
   private val check = (message: String, secret: String) => {
     val v201 = Try { HmacSHA1.signHmacSHA1hex(message, secret) }
