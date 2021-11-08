@@ -42,7 +42,7 @@ object DoSomeOpsBench {
 
   def foo(i: Int): Unit = {}
 
-  implicit class FormatNumber(val n: Long) extends AnyVal {
+  implicit class FormatNumber(private val n: Long) extends AnyVal {
     def fmt: String = {
       val s = n.toString
       val prefix = " " * (s.length % 3)
